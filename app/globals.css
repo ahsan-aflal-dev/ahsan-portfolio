@@ -1,26 +1,775 @@
 @import "tailwindcss";
 
+/* =========================================================
+   AHSAN — GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core colors */
+  --background: #050509;
+  --foreground: #ededed;
+
+  /* AHSAN atmosphere */
+  --purple: #8d0b93;
+  --pink: #ff057c;
+  --deep-purple: #321575;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.025);
+  --glass-bg-hover: rgba(255, 255, 255, 0.045);
+
+  --glass-border: rgba(255, 255, 255, 0.075);
+  --glass-border-hover: rgba(255, 255, 255, 0.14);
+
+  --glass-highlight: rgba(255, 255, 255, 0.08);
+
+  --glass-blur: 24px;
+  --glass-blur-heavy: 36px;
+
+  --surface-dark: rgba(8, 8, 13, 0.72);
+
+  /* Typography */
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.48);
+  --text-muted: rgba(255, 255, 255, 0.28);
+
+  /* Layout */
+  --content-width: 1200px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(141, 11, 147, 0.055),
+      transparent 35%
+    ),
+    var(--background);
+
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(141, 11, 147, 0.35);
+  color: white;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050509;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Firefox */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) #050509;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   AHSAN CONTAINER
+   ========================================================= */
+
+.page-container {
+  width: min(
+    calc(100% - 2rem),
+    var(--content-width)
+  );
+
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .page-container {
+    width: min(
+      calc(100% - 3rem),
+      var(--content-width)
+    );
+  }
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+.text-gradient {
+  background:
+    linear-gradient(
+      225deg,
+      #ff057c 0%,
+      #8d0b93 50%,
+      #321575 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* =========================================================
+   GLASS SYSTEM
+   ========================================================= */
+
+.glass {
+  background: var(--glass-bg);
+
+  border: 1px solid var(--glass-border);
+
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.glass-heavy {
+  background: var(--surface-dark);
+
+  border: 1px solid var(--glass-border);
+
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+}
+
+.glass-hover {
+  transition:
+    background-color 500ms ease,
+    border-color 500ms ease,
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 500ms ease;
+}
+
+.glass-hover:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+}
+
+/* =========================================================
+   GLASS HIGHLIGHT
+   ========================================================= */
+
+.glass-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-highlight::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      transparent 35%
+    );
+}
+
+/* =========================================================
+   PREMIUM SURFACE
+   ========================================================= */
+
+.surface {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 20px 70px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   INNER EDGE
+   ========================================================= */
+
+.inner-edge {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================================
+   INTERACTIVE SURFACE
+   ========================================================= */
+
+.interactive-surface {
+  transition:
+    background-color 400ms ease,
+    border-color 400ms ease,
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms ease;
+}
+
+.interactive-surface:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(255, 255, 255, 0.13);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(141, 11, 147, 0.04);
+}
+
+/* =========================================================
+   FOCUS SYSTEM
+   ========================================================= */
+
+.focus-ring:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.08),
+    0 0 0 4px rgba(141, 11, 147, 0.18);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   LIQUID LIGHT HELPERS
+   ========================================================= */
+
+.light-purple {
+  background: rgba(141, 11, 147, 0.1);
+}
+
+.light-pink {
+  background: rgba(255, 5, 124, 0.055);
+}
+
+.light-blue {
+  background: rgba(50, 21, 117, 0.1);
+}
+
+/* =========================================================
+   ATMOSPHERIC GLOW
+   ========================================================= */
+
+.atmosphere-purple {
+  box-shadow:
+    0 0 100px rgba(141, 11, 147, 0.08);
+}
+
+.atmosphere-pink {
+  box-shadow:
+    0 0 100px rgba(255, 5, 124, 0.055);
+}
+
+/* =========================================================
+   FINE GRID
+   ========================================================= */
+
+.fine-grid {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+}
+
+/* =========================================================
+   CINEMATIC VIGNETTE
+   ========================================================= */
+
+.vignette {
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 35%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
+}
+
+/* =========================================================
+   BUTTON / INTERACTION MICRO MOTION
+   ========================================================= */
+
+.interactive {
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 300ms ease,
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.interactive:hover {
+  transform: translateY(-1px);
+}
+
+.interactive:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   GLASS WHITE BUTTON OVERRIDE
+   ========================================================= */
+
+/*
+   Converts existing solid-white interactive elements into
+   transparent liquid-glass buttons without changing their
+   component markup or page layouts.
+
+   Only elements using the exact bg-white utility are targeted.
+*/
+
+a.bg-white,
+button.bg-white {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.035)
+    ) !important;
+
+  color: rgba(255, 255, 255, 0.92) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 10px 35px rgba(0, 0, 0, 0.16) !important;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  transition:
+    background 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+a.bg-white:hover,
+button.bg-white:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(141, 11, 147, 0.055)
+    ) !important;
+
+  color: #ffffff !important;
+
+  border-color: rgba(255, 255, 255, 0.22) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 14px 42px rgba(0, 0, 0, 0.22),
+    0 0 30px rgba(141, 11, 147, 0.045) !important;
+
+  transform: translateY(-1px);
+}
+
+a.bg-white:active,
+button.bg-white:active {
+  transform: translateY(0);
+}
+
+@media (hover: none) {
+  a.bg-white:hover,
+  button.bg-white:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.bg-white,
+  button.bg-white {
+    transition: none;
+  }
+
+  a.bg-white:hover,
+  button.bg-white:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .glass-hover,
+  .interactive-surface,
+  .interactive {
+    transition: none;
+  }
+
+  .interactive-surface:hover,
+  .interactive:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 639px) {
+  .page-container {
+    width: min(
+      calc(100% - 1.5rem),
+      var(--content-width)
+    );
+  }
+}
+
+/* =========================================================
+   AHSAN — TYPOGRAPHY SYSTEM
+   ========================================================= */
+
+.eyebrow {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  font-weight: 500;
+
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.display-title {
+  font-size: clamp(2.75rem, 7vw, 6.5rem);
+
+  line-height: 0.95;
+
+  font-weight: 600;
+
+  letter-spacing: -0.055em;
+
+  text-wrap: balance;
+}
+
+.page-title {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+
+  line-height: 0.98;
+
+  font-weight: 600;
+
+  letter-spacing: -0.05em;
+
+  text-wrap: balance;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 3.25rem);
+
+  line-height: 1.02;
+
+  font-weight: 600;
+
+  letter-spacing: -0.04em;
+
+  text-wrap: balance;
+}
+
+.subsection-title {
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+
+  line-height: 1.15;
+
+  font-weight: 500;
+
+  letter-spacing: -0.025em;
+}
+
+.body-large {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+
+  line-height: 1.75;
+
+  color: var(--muted-strong);
+
+  text-wrap: pretty;
+}
+
+.body-copy {
+  font-size: 0.95rem;
+
+  line-height: 1.75;
+
+  color: var(--muted);
+
+  text-wrap: pretty;
+}
+
+.meta {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* =========================================================
+   SECTION RHYTHM
+   ========================================================= */
+
+.section-spacing {
+  padding-top: clamp(5rem, 10vw, 9rem);
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+}
+
+.section-spacing-sm {
+  padding-top: clamp(3.5rem, 7vw, 6rem);
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.section-gap {
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+/* =========================================================
+   TEXT WIDTH
+   ========================================================= */
+
+.text-measure {
+  max-width: 68ch;
+}
+
+.text-measure-sm {
+  max-width: 52ch;
+}
+
+.text-measure-xs {
+  max-width: 42ch;
+}
+
+/* =========================================================
+   MOBILE TYPOGRAPHY
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .display-title {
+    letter-spacing: -0.045em;
+  }
+
+  .page-title {
+    letter-spacing: -0.04em;
+  }
+
+  .section-title {
+    letter-spacing: -0.03em;
+  }
+
+  .body-large {
+    line-height: 1.7;
+  }
+}
+
+/* =========================================================
+   AHSAN — MOTION SYSTEM
+   ========================================================= */
+
+:root {
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --duration-fast: 180ms;
+  --duration-normal: 350ms;
+  --duration-slow: 650ms;
+}
+
+/* Premium motion helpers */
+
+.motion-premium {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    opacity var(--duration-normal) ease,
+    background-color var(--duration-normal) ease,
+    border-color var(--duration-normal) ease,
+    box-shadow var(--duration-normal) ease;
+}
+
+.motion-premium:hover {
+  transform: translateY(-2px);
+}
+
+.motion-lift {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    box-shadow var(--duration-normal) ease;
+}
+
+.motion-lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.22),
+    0 0 45px rgba(141, 11, 147, 0.045);
+}
+
+.motion-scale {
+  transition:
+    transform var(--duration-normal) var(--ease-premium);
+}
+
+.motion-scale:hover {
+  transform: scale(1.015);
+}
+
+.motion-glow {
+  transition:
+    border-color var(--duration-normal) ease,
+    box-shadow var(--duration-normal) ease;
+}
+
+.motion-glow:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+
+  box-shadow:
+    0 0 45px rgba(141, 11, 147, 0.06);
+}
+
+/* Prevent accidental motion on touch devices */
+
+@media (hover: none) {
+  .motion-premium:hover,
+  .motion-lift:hover,
+  .motion-scale:hover {
+    transform: none;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-premium,
+  .motion-lift,
+  .motion-scale,
+  .motion-glow {
+    transition: none;
+  }
+
+  .motion-premium:hover,
+  .motion-lift:hover,
+  .motion-scale:hover {
+    transform: none;
+  }
 }
